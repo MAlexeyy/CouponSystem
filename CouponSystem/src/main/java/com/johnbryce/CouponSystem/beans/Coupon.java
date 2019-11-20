@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table
-public class Coupons {
+public class Coupon {
 	private int id;
 	private int company_id;
 	private int category_id;
@@ -22,8 +22,11 @@ public class Coupons {
 	private int amount;
 	private double price;
 	private String image;
+	private enum Category {
+		Food, Electricity, Restaurant, Vacation
+	}
 
-	public Coupons() {
+	public Coupon() {
 	}
 
 	@Id

@@ -1,5 +1,7 @@
 package com.johnbryce.CouponSystem.beans;
 
+import java.util.ArrayList;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,13 +11,15 @@ import javax.persistence.Table;
 
 @Entity
 @Table
-public class Companies {
+public class Customer {
 	private int id;
-	private String name;
+	private String first_name;
+	private String last_name;
 	private String email;
 	private String password;
+	ArrayList<Coupon> coupons;
 
-	public Companies() {
+	public Customer() {
 	}
 
 	@Id
@@ -28,13 +32,29 @@ public class Companies {
 		this.id = id;
 	}
 	@Column
-	public String getName() {
-		return name;
+	public String getFirst_name() {
+		return first_name;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setFirst_name(String first_name) {
+		this.first_name = first_name;
 	}
+	@Column
+	public String getLast_name() {
+		return last_name;
+	}
+
+	public void setLast_name(String last_name) {
+		this.last_name = last_name;
+	}
+	public ArrayList<Coupon> getCoupons() {
+		return coupons;
+	}
+
+	public void setCoupons(ArrayList<Coupon> coupons) {
+		this.coupons = coupons;
+	}
+
 	@Column
 	public String getEmail() {
 		return email;
@@ -54,7 +74,7 @@ public class Companies {
 
 	@Override
 	public String toString() {
-		return "Companies [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + "]";
+		return "Customers [id=" + id + ", first_name=" + first_name + ", last_name=" + last_name + ", email=" + email
+				+ ", password=" + password + "]";
 	}
-
 }

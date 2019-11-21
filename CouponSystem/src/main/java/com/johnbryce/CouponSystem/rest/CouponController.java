@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@RequestMapping("coupons")
-public class CouponsController {
+@RequestMapping("coupon")
+public class CouponController {
 	
 }

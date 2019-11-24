@@ -24,8 +24,9 @@ import com.johnbryce.CouponSystem.beans.Coupon;
 
 
 
-@Repository
 public interface CompanyRepo extends CrudRepository<Company, Long> {
+	
+	
 	
 //	public boolean existsByEmailAndPassword(String email,String password);
 //
@@ -42,6 +43,7 @@ public interface CompanyRepo extends CrudRepository<Company, Long> {
 //	public int getCompanyId(String email);
 //
 //	public ArrayList<Coupon> getOneCompanyCoupons(int id);
+	
 
 	
 }

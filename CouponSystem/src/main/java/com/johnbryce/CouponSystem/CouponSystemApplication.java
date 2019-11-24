@@ -4,12 +4,19 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 
+import com.johnbryce.CouponSystem.beans.Company;
+import com.johnbryce.CouponSystem.service.CompanyService;
+
 @SpringBootApplication
 public class CouponSystemApplication {
 
 	public static void main(String[] args) {
 		ApplicationContext ctx = SpringApplication.run(CouponSystemApplication.class, args);
 		System.out.println("@@@@@ GO @@@@@");
+		
+		CompanyService dao = ctx.getBean(CompanyService.class);
+		
+		
 	}
 
 }

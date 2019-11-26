@@ -23,12 +23,12 @@ import com.johnbryce.CouponSystem.beans.Coupon;
 
 
 
-
+@Repository
 public interface CompanyRepo extends CrudRepository<Company, Long> {
 	
 	
 	
-//	public boolean existsByEmailAndPassword(String email,String password);
+	public boolean existsByEmailAndPassword(String email,String password);
 //
 //	public void addCompany(Company company);
 //

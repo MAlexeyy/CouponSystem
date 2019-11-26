@@ -17,7 +17,7 @@ public class CompanyService {
 	
 	//TODO 
 	public boolean isCompanyExists(String email,String password) {
-		return false;
+		return repo.existsByEmailAndPassword(email, password);
 	}
 
 	public void addCompany(Company p) {

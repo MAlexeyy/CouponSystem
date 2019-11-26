@@ -34,11 +34,12 @@ public class CouponService {
 		return repo.findById(couponId);
 	}
 
-	// TODO
-	public void addCouponPurchase(int coustomerId, int couponId) {
-	}
-
-	// TODO
-	public void deleteCouponPuchase(int customerId, int couponId) {
-	}
+//	// TODO
+//	public void addCouponPurchase(int coustomerId, int couponId) {
+//		
+//	}
+//
+//	// TODO
+//	public void deleteCouponPuchase(int customerId, int couponId) {
+//	}
 }

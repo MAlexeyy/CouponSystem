@@ -22,9 +22,9 @@ public class Coupon {
 	private int amount;
 	private double price;
 	private String image;
-	private enum Category {
-		Food, Electricity, Restaurant, Vacation
-	}
+//	private enum Category {
+//		Food, Electricity, Restaurant, Vacation
+//	}
 
 	public Coupon() {
 	}

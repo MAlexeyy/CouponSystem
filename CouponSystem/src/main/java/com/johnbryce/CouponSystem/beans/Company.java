@@ -7,12 +7,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table
 public class Company {
-	private int id;
+	private Long id;
 	private String name;
 	private String email;
 	private String password;
@@ -23,11 +24,11 @@ public class Company {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -56,7 +57,8 @@ public class Company {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
+	
+	//@OneToMany
 	public ArrayList<Coupon> getCoupons() {
 		return coupons;
 	}

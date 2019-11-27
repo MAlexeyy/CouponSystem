@@ -12,7 +12,7 @@ import javax.persistence.Table;
 @Entity
 @Table
 public class Coupon {
-	private int id;
+	private Long id;
 	private int company_id;
 	private int category_id;
 	private String title;
@@ -31,11 +31,11 @@ public class Coupon {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	@Column

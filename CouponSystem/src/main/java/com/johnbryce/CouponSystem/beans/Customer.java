@@ -1,34 +1,37 @@
 package com.johnbryce.CouponSystem.beans;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table
 public class Customer {
-	private int id;
+	private Long id;
 	private String first_name;
 	private String last_name;
 	private String email;
 	private String password;
-	ArrayList<Coupon> coupons;
+	Collection<Coupon> coupons;
 
 	public Customer() {
 	}
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	@Column
@@ -47,7 +50,9 @@ public class Customer {
 	public void setLast_name(String last_name) {
 		this.last_name = last_name;
 	}
-	public ArrayList<Coupon> getCoupons() {
+	
+	@OneToMany(cascade=CascadeType.PERSIST)
+	public Collection<Coupon> getCoupons() {
 		return coupons;
 	}
 

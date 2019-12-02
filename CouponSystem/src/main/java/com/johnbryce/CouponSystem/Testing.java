@@ -11,7 +11,7 @@ public class Testing {
 	public static void Test(String[] args) {
 
 		ApplicationContext ctx = SpringApplication.run(CouponSystemApplication.class, args);
-		System.out.println("@@@@@ GO @@@@@");
+		System.out.println("@@@@@ GO @@@@");
 
 		AdminService dao = ctx.getBean(AdminService.class);
 

@@ -57,8 +57,8 @@ public class Company {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-	//@OneToMany
+
+	// @OneToMany
 	public ArrayList<Coupon> getCoupons() {
 		return coupons;
 	}

@@ -8,8 +8,8 @@ import org.springframework.stereotype.Repository;
 import com.johnbryce.CouponSystem.beans.Coupon;
 
 @Repository
-public interface CouponRepo extends JpaRepository<Coupon, Integer> {
-	
+public interface CouponRepo extends JpaRepository<Coupon, Long> {
+
 //	public void addCoupon(Coupon coupon);
 //
 //	public void updateCoupon(Coupon coupon);

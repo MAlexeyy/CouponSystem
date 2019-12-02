@@ -1,17 +1,15 @@
 package com.johnbryce.CouponSystem.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.johnbryce.CouponSystem.service.CompanyService;
+import com.johnbryce.CouponSystem.service.CustomerService;
 
 @RestController
-@RequestMapping("company")
-public class CompanyController {
+@RequestMapping("customer")
+public class CustomerController {
 	
 	@Autowired
-	CompanyService companyService;
-	
+	CustomerService customerService;
 }

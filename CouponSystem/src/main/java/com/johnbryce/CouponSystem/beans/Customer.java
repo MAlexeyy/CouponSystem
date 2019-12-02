@@ -26,7 +26,7 @@ public class Customer {
 	}
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	public Long getId() {
 		return id;
 	}
@@ -34,6 +34,7 @@ public class Customer {
 	public void setId(Long id) {
 		this.id = id;
 	}
+
 	@Column
 	public String getFirst_name() {
 		return first_name;
@@ -42,6 +43,7 @@ public class Customer {
 	public void setFirst_name(String first_name) {
 		this.first_name = first_name;
 	}
+
 	@Column
 	public String getLast_name() {
 		return last_name;
@@ -50,8 +52,8 @@ public class Customer {
 	public void setLast_name(String last_name) {
 		this.last_name = last_name;
 	}
-	
-	@OneToMany(cascade=CascadeType.PERSIST)
+
+	@OneToMany(cascade = CascadeType.PERSIST)
 	public Collection<Coupon> getCoupons() {
 		return coupons;
 	}

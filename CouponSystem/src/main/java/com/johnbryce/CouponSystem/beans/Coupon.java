@@ -30,7 +30,7 @@ public class Coupon {
 	}
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	public Long getId() {
 		return id;
 	}
@@ -38,6 +38,7 @@ public class Coupon {
 	public void setId(Long id) {
 		this.id = id;
 	}
+
 	@Column
 	public int getCompany_id() {
 		return company_id;
@@ -46,6 +47,7 @@ public class Coupon {
 	public void setCompany_id(int company_id) {
 		this.company_id = company_id;
 	}
+
 	@Column
 	public int getCategory_id() {
 		return category_id;
@@ -54,6 +56,7 @@ public class Coupon {
 	public void setCategory_id(int category_id) {
 		this.category_id = category_id;
 	}
+
 	@Column
 	public String getTitle() {
 		return title;
@@ -62,6 +65,7 @@ public class Coupon {
 	public void setTitle(String title) {
 		this.title = title;
 	}
+
 	@Column
 	public String getDescription() {
 		return description;
@@ -70,6 +74,7 @@ public class Coupon {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
 	@Column
 	public Date getStart_date() {
 		return start_date;
@@ -78,6 +83,7 @@ public class Coupon {
 	public void setStart_date(Date start_date) {
 		this.start_date = start_date;
 	}
+
 	@Column
 	public Date getEnd_date() {
 		return end_date;
@@ -86,6 +92,7 @@ public class Coupon {
 	public void setEnd_date(Date end_date) {
 		this.end_date = end_date;
 	}
+
 	@Column
 	public int getAmount() {
 		return amount;
@@ -94,6 +101,7 @@ public class Coupon {
 	public void setAmount(int amount) {
 		this.amount = amount;
 	}
+
 	@Column
 	public double getPrice() {
 		return price;
@@ -102,6 +110,7 @@ public class Coupon {
 	public void setPrice(double price) {
 		this.price = price;
 	}
+
 	@Column
 	public String getImage() {
 		return image;

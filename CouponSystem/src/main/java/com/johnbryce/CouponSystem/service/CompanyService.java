@@ -1,7 +1,5 @@
 package com.johnbryce.CouponSystem.service;
 
-import java.util.List;
-import java.util.Locale.Category;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +10,11 @@ import com.johnbryce.CouponSystem.beans.Coupon;
 import com.johnbryce.CouponSystem.repo.CompanyRepo;
 import com.johnbryce.CouponSystem.repo.CouponRepo;
 
+/**
+ * This is....
+ * @author alexeymx
+ *
+ */
 @Service
 public class CompanyService {
 
@@ -29,6 +32,10 @@ public class CompanyService {
 //		
 //	}
 
+	/**
+	 * 
+	 * @param coupon
+	 */
 	public void deleteCoupon(Coupon coupon) {
 		couponRepo.delete(coupon);
 	}

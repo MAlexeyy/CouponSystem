@@ -34,7 +34,7 @@ public class CompanyService {
 
 	/**
 	 * 
-	 * @param coupon
+	 * @param coupons
 	 */
 	public void deleteCoupon(Coupon coupon) {
 		couponRepo.delete(coupon);

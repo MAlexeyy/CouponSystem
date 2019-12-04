@@ -24,6 +24,18 @@ public class Customer {
 
 	public Customer() {
 	}
+	
+	
+
+	public Customer(String first_name, String last_name, String email, String password) {
+		super();
+		this.first_name = first_name;
+		this.last_name = last_name;
+		this.email = email;
+		this.password = password;
+	}
+
+
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

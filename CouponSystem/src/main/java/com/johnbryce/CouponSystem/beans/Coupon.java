@@ -4,17 +4,21 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.johnbryce.CouponSystem.enums.CouponType;
+
 @Entity
 @Table
 public class Coupon {
 	private Long id;
-	private int company_id;
-	private int category_id;
+	private long company_id;
+	private CouponType category;
 	private String title;
 	private String description;
 	private Date start_date;
@@ -28,6 +32,28 @@ public class Coupon {
 
 	public Coupon() {
 	}
+	
+	
+	
+	
+
+	public Coupon(long company_id, CouponType category, String title, String description, Date start_date, Date end_date,
+		int amount, double price, String image) {
+	super();
+	this.company_id = company_id;
+	this.category = category;
+	this.title = title;
+	this.description = description;
+	this.start_date = start_date;
+	this.end_date = end_date;
+	this.amount = amount;
+	this.price = price;
+	this.image = image;
+}
+
+
+
+
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -40,21 +66,22 @@ public class Coupon {
 	}
 
 	@Column
-	public int getCompany_id() {
+	public Long getCompany_id() {
 		return company_id;
 	}
 
-	public void setCompany_id(int company_id) {
+	public void setCompany_id(Long company_id) {
 		this.company_id = company_id;
 	}
 
 	@Column
-	public int getCategory_id() {
-		return category_id;
+	@Enumerated(EnumType.STRING)
+	public CouponType getCategory() {
+		return category;
 	}
 
-	public void setCategory_id(int category_id) {
-		this.category_id = category_id;
+	public void setCategory(CouponType category) {
+		this.category = category;
 	}
 
 	@Column
@@ -122,7 +149,7 @@ public class Coupon {
 
 	@Override
 	public String toString() {
-		return "Coupons [id=" + id + ", company_id=" + company_id + ", category_id=" + category_id + ", title=" + title
+		return "Coupons [id=" + id + ", company_id=" + company_id + ", category_id=" + category + ", title=" + title
 				+ ", description=" + description + ", start_date=" + start_date + ", end_date=" + end_date + ", amount="
 				+ amount + ", price=" + price + ", image=" + image + "]";
 	}

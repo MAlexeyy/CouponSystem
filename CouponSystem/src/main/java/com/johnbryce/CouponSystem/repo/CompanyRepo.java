@@ -20,7 +20,8 @@ import com.johnbryce.CouponSystem.beans.Coupon;
 public interface CompanyRepo extends CrudRepository<Company, Long> {
 
 	public boolean existsCompanyByEmailAndPassword(String email, String password);
-//
+
+	public boolean existsCompanyByNameOrEmail(String name, String email);
 //	public void addCompany(Company company);
 //
 //	public void updateCompany(Company company);

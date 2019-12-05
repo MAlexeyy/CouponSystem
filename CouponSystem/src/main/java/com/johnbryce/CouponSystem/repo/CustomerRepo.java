@@ -10,6 +10,8 @@ import com.johnbryce.CouponSystem.beans.Customer;
 
 @Repository
 public interface CustomerRepo extends JpaRepository<Customer, Long> {
+	
+	public boolean existsCustomerByEmail(String email);
 
 //	public boolean existsByEmailAndPassword(String email, String password);
 //

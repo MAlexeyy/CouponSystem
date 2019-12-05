@@ -25,7 +25,7 @@ public class CustomerService {
 
 	}
 
-	public List<Coupon> getCustomerCoupons(Long customerId) {
+	public List<Coupon> getCustomerCoupons(long customerId) {
 		Customer tmp = customerRepo.findById(customerId).get();
 		return (List<Coupon>) tmp.getCoupons();
 	}
@@ -39,7 +39,7 @@ public class CustomerService {
 	}
 
 	// TODO ask kobi, if this is fine.
-	public String getCustomerDetails(Long customerId) {
+	public String getCustomerDetails(long customerId) {
 		return customerRepo.findById(customerId).get().toString();
 	}
 

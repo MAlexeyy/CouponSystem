@@ -10,7 +10,7 @@ import com.johnbryce.CouponSystem.service.AdminService;
 @RequestMapping("admin")
 public class AdminController {
 	
-	@Autowired
-	AdminService adminService;
+//	@Autowired
+//	AdminService adminService;
 	
 }

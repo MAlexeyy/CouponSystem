@@ -13,7 +13,7 @@ import javax.persistence.Table;
 @Entity
 @Table
 public class Company {
-	private Long id;
+	private long id;
 	private String name;
 	private String email;
 	private String password;
@@ -35,11 +35,11 @@ public class Company {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 

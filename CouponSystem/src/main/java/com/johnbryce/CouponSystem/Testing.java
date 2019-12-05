@@ -34,12 +34,16 @@ public class Testing {
 		Company c3 = new Company("Facebook", "facebook@mail.com", "facebook123");
 		Company c4 = new Company("Qualcome", "qualcome@mail.com", "qualcome123");
 		Company c5 = new Company("Samsung", "samsung@mail.com", "samsung123");
-
+		
+		try {
 		adminService.addCompany(c1);
 		adminService.addCompany(c2);
 		adminService.addCompany(c3);
 		adminService.addCompany(c4);
 		adminService.addCompany(c5);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		
 		//Adding coupons----------------------------------------------------------------------------------------------------------------------------------------
 		
@@ -66,13 +70,31 @@ public class Testing {
 		Customer customer5 = new Customer("Wookie" , "Wookielast" , "wookie@mail.com" , "wookie123");
 		Customer customer6 = new Customer("Zoockie" , "Zoockielast" , "zoockie@mail.com" , "zoockie123");
 		
-		adminService.addCustomer(customer1);
-		adminService.addCustomer(customer2);
-		adminService.addCustomer(customer3);
-		adminService.addCustomer(customer4);
-		adminService.addCustomer(customer5);
-		adminService.addCustomer(customer6);
+		try {
+			adminService.addCustomer(customer1);
+			adminService.addCustomer(customer2);
+			adminService.addCustomer(customer3);
+			adminService.addCustomer(customer4);
+			adminService.addCustomer(customer5);
+			adminService.addCustomer(customer6);
+		} catch (Exception e) {			
+			e.printStackTrace();
+		}
+		
+		System.out.println(c2);
+		
+		Company cc = new Company("Google", "google@mail.com!!!", "google123!!!");
+		cc.setId(2);
+		try {
+			adminService.updateCompany(cc);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println(adminService.getOneCompany(2).toString());		
 		
 	}
+	
+	
 
 }

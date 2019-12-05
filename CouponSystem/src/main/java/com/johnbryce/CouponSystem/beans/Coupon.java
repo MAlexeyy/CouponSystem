@@ -16,7 +16,7 @@ import com.johnbryce.CouponSystem.enums.CouponType;
 @Entity
 @Table
 public class Coupon {
-	private Long id;
+	private long id;
 	private long company_id;
 	private CouponType category;
 	private String title;
@@ -57,20 +57,20 @@ public class Coupon {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
 	@Column
-	public Long getCompany_id() {
+	public long getCompany_id() {
 		return company_id;
 	}
 
-	public void setCompany_id(Long company_id) {
+	public void setCompany_id(long company_id) {
 		this.company_id = company_id;
 	}
 

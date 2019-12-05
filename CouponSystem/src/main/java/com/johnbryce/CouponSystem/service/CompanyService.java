@@ -40,7 +40,7 @@ public class CompanyService {
 		couponRepo.delete(coupon);
 	}
 
-//	public List<Coupon> getCompanyCoupons(Long companyId){
+//	public List<Coupon> getCompanyCoupons(long companyId){
 //		return 
 //	}
 
@@ -52,7 +52,7 @@ public class CompanyService {
 //		return
 //	}
 
-	public Optional<Company> getCompanyDetails(Long companyId) {
+	public Optional<Company> getCompanyDetails(long companyId) {
 		return companyRepo.findById(companyId);
 	}
 

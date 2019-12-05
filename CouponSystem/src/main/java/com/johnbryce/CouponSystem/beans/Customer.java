@@ -15,7 +15,7 @@ import javax.persistence.Table;
 @Entity
 @Table
 public class Customer {
-	private Long id;
+	private long id;
 	private String first_name;
 	private String last_name;
 	private String email;
@@ -39,11 +39,11 @@ public class Customer {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 

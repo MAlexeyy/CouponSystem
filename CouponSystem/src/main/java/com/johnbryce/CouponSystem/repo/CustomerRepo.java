@@ -1,11 +1,8 @@
 package com.johnbryce.CouponSystem.repo;
 
-import java.util.ArrayList;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.johnbryce.CouponSystem.beans.Coupon;
 import com.johnbryce.CouponSystem.beans.Customer;
 
 @Repository

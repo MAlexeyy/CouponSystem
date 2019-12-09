@@ -1,6 +1,6 @@
 package com.johnbryce.CouponSystem.beans;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,7 +17,7 @@ public class Company {
 	private String name;
 	private String email;
 	private String password;
-	ArrayList<Coupon> coupons;
+	List<Coupon> coupons;
 
 	public Company() {
 	}
@@ -69,12 +69,12 @@ public class Company {
 		this.password = password;
 	}
 
-	// @OneToMany
-	public ArrayList<Coupon> getCoupons() {
+	@OneToMany(mappedBy = "company")
+	public List<Coupon> getCoupons() {
 		return coupons;
 	}
 
-	public void setCoupons(ArrayList<Coupon> coupons) {
+	public void setCoupons(List<Coupon> coupons) {
 		this.coupons = coupons;
 	}
 

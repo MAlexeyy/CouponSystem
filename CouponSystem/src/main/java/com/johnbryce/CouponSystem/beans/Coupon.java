@@ -1,14 +1,21 @@
 package com.johnbryce.CouponSystem.beans;
 
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.johnbryce.CouponSystem.enums.CouponType;
@@ -17,7 +24,7 @@ import com.johnbryce.CouponSystem.enums.CouponType;
 @Table
 public class Coupon {
 	private long id;
-	private long company_id;
+	private Company company;
 	private CouponType category;
 	private String title;
 	private String description;
@@ -26,34 +33,23 @@ public class Coupon {
 	private int amount;
 	private double price;
 	private String image;
-//	private enum Category {
-//		Food, Electricity, Restaurant, Vacation
-//	}
+	private List<Customer> customers;
 
 	public Coupon() {
 	}
-	
-	
-	
-	
 
-	public Coupon(long company_id, CouponType category, String title, String description, Date start_date, Date end_date,
-		int amount, double price, String image) {
-	super();
-	this.company_id = company_id;
-	this.category = category;
-	this.title = title;
-	this.description = description;
-	this.start_date = start_date;
-	this.end_date = end_date;
-	this.amount = amount;
-	this.price = price;
-	this.image = image;
-}
-
-
-
-
+	public Coupon(CouponType category, String title, String description, Date start_date,
+			Date end_date, int amount, double price, String image) {
+		super();
+		this.category = category;
+		this.title = title;
+		this.description = description;
+		this.start_date = start_date;
+		this.end_date = end_date;
+		this.amount = amount;
+		this.price = price;
+		this.image = image;
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -65,13 +61,14 @@ public class Coupon {
 		this.id = id;
 	}
 
-	@Column
-	public long getCompany_id() {
-		return company_id;
+	@ManyToOne
+	@JoinColumn(name = "company_id")
+	public Company getCompany() {
+		return company;
 	}
 
-	public void setCompany_id(long company_id) {
-		this.company_id = company_id;
+	public void setCompany(Company company) {
+		this.company = company;
 	}
 
 	@Column
@@ -147,9 +144,19 @@ public class Coupon {
 		this.image = image;
 	}
 
+	@ManyToMany(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
+	@JoinTable(name = "customers_vs_coupons", joinColumns = @JoinColumn(name = "coupon_id"), inverseJoinColumns = @JoinColumn(name = "customer_id"), foreignKey = @ForeignKey(name = "FK_COUPON_ID"), inverseForeignKey = @ForeignKey(name = "FK_CUSTOMER_ID"))
+	public List<Customer> getCustomers() {
+		return customers;
+	}
+
+	public void setCustomers(List<Customer> customers) {
+		this.customers = customers;
+	}
+
 	@Override
 	public String toString() {
-		return "Coupons [id=" + id + ", company_id=" + company_id + ", category_id=" + category + ", title=" + title
+		return "Coupons [id=" + id + ", company=" + company + ", category=" + category + ", title=" + title
 				+ ", description=" + description + ", start_date=" + start_date + ", end_date=" + end_date + ", amount="
 				+ amount + ", price=" + price + ", image=" + image + "]";
 	}

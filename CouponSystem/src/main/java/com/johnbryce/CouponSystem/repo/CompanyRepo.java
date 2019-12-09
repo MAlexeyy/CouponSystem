@@ -1,20 +1,9 @@
 package com.johnbryce.CouponSystem.repo;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import com.johnbryce.CouponSystem.beans.Company;
-import com.johnbryce.CouponSystem.beans.Coupon;
-
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
-
-import com.johnbryce.CouponSystem.beans.Company;
-import com.johnbryce.CouponSystem.beans.Coupon;
 
 @Repository
 public interface CompanyRepo extends CrudRepository<Company, Long> {

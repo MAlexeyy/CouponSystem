@@ -21,9 +21,11 @@ public class CustomerService {
 	CustomerRepo customerRepo;
 
 	// TODO ask kobi, have to add customer id to this method?
-	public void purchaseCoupon(Customer customer, Coupon coupon) {
-
-	}
+//	public void purchaseCoupon(Customer customer, Coupon coupon) throws Exception {
+//		if(!customerRepo.existsById(customer.getId()) || !couponRepo.existsById(coupon.getId())) {
+//			throw new Exception("Customer or coupon does not exists.");
+//		} else if()
+//	}
 
 	public List<Coupon> getCustomerCoupons(long customerId) {
 		Customer tmp = customerRepo.findById(customerId).get();

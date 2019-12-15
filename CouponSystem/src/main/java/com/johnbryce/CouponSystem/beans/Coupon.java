@@ -33,6 +33,7 @@ public class Coupon {
 	private int amount;
 	private double price;
 	private String image;
+	
 	private List<Customer> customers;
 
 	public Coupon() {
@@ -116,7 +117,7 @@ public class Coupon {
 	public void setEnd_date(Date end_date) {
 		this.end_date = end_date;
 	}
-
+	
 	@Column
 	public int getAmount() {
 		return amount;

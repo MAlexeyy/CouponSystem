@@ -1,7 +1,6 @@
 package com.johnbryce.CouponSystem.service;
 
 import java.util.List;
-import java.util.Locale.Category;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,6 +95,10 @@ public class CompanyService {
 
 	public Optional<Company> getCompanyDetails(long companyId) {
 		return companyRepo.findById(companyId);
+	}
+	
+	public List<Coupon> getAllCoupons(){
+		return couponRepo.findAll();
 	}
 
 }

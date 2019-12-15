@@ -18,6 +18,7 @@ import javax.persistence.Table;
 @Entity
 @Table
 public class Customer {
+
 	private long id;
 	private String first_name;
 	private String last_name;
@@ -27,8 +28,6 @@ public class Customer {
 
 	public Customer() {
 	}
-	
-	
 
 	public Customer(String first_name, String last_name, String email, String password) {
 		super();
@@ -37,8 +36,6 @@ public class Customer {
 		this.email = email;
 		this.password = password;
 	}
-
-
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -68,12 +65,8 @@ public class Customer {
 		this.last_name = last_name;
 	}
 
-	@ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-	@JoinTable(name = "customers_vs_coupons", 
-			   joinColumns = @JoinColumn(name = "customer_id"),
-			   inverseJoinColumns = @JoinColumn(name = "coupon_id"),
-			   foreignKey = @ForeignKey(name = "FK_CUSTOMER_ID"),
-			   inverseForeignKey = @ForeignKey(name = "FK_COUPON_ID"))
+	@ManyToMany(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
+	@JoinTable(name = "customers_vs_coupons", joinColumns = @JoinColumn(name = "customer_id"), inverseJoinColumns = @JoinColumn(name = "coupon_id"), foreignKey = @ForeignKey(name = "FK_CUSTOMER_ID"), inverseForeignKey = @ForeignKey(name = "FK_COUPON_ID"))
 	public List<Coupon> getCoupons() {
 		return coupons;
 	}
@@ -101,7 +94,8 @@ public class Customer {
 
 	@Override
 	public String toString() {
-		return "Customers [id=" + id + ", first_name=" + first_name + ", last_name=" + last_name + ", email=" + email
+		return "Customer [id=" + id + ", first_name=" + first_name + ", last_name=" + last_name + ", email=" + email
 				+ ", password=" + password + "]";
 	}
+
 }

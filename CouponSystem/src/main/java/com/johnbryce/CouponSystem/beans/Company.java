@@ -13,6 +13,7 @@ import javax.persistence.Table;
 @Entity
 @Table
 public class Company {
+	
 	private long id;
 	private String name;
 	private String email;

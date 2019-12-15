@@ -19,18 +19,39 @@ public class CustomerService {
 
 	@Autowired
 	CustomerRepo customerRepo;
-
+	
+	//Login
+//	@Autowired
+//	Customer customer
+	//OR
+//	long customerId;
+	
+	
 	// TODO ask kobi, have to add customer id to this method?
-//	public void purchaseCoupon(Customer customer, Coupon coupon) throws Exception {
-//		if(!customerRepo.existsById(customer.getId()) || !couponRepo.existsById(coupon.getId())) {
-//			throw new Exception("Customer or coupon does not exists.");
-//		} else if()
-//	}
-
-	public List<Coupon> getCustomerCoupons(long customerId) {
-		Customer tmp = customerRepo.findById(customerId).get();
-		return (List<Coupon>) tmp.getCoupons();
+	public Customer purchaseCoupon(Customer customer, long id) throws Exception {
+		if(!customerRepo.existsById(customer.getId()) || !couponRepo.existsById(id)) {
+			throw new Exception("Customer or coupon does not exists.");
+		} else {
+			Customer newCustomer = customer;
+			List<Coupon> coupons = newCustomer.getCoupons();
+			coupons.add(couponRepo.findById(id).get());
+			newCustomer.setCoupons(coupons);
+			customerRepo.save(newCustomer);
+			
+			Coupon newCoupon = couponRepo.findById(id).get();
+			List<Customer> customers = newCoupon.getCustomers();
+			customers.add(customerRepo.findById(customer.getId()).get());
+			newCoupon.setCustomers(customers);
+			couponRepo.save(newCoupon);
+			
+			return customerRepo.findById(customer.getId()).get();
+		}
 	}
+
+//	public List<Coupon> getCustomerCoupons(long customerId) {
+//		Customer tmp = customerRepo.findById(customerId).get();
+//		return (List<Coupon>) tmp.getCoupons();
+//	}
 
 	public List<Coupon> getCustomerCoupons(Category category) {
 		return null;

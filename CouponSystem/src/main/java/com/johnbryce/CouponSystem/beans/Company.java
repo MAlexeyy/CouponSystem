@@ -70,7 +70,7 @@ public class Company {
 		this.password = password;
 	}
 
-	@OneToMany(mappedBy = "company")
+	@OneToMany//(mappedBy = "company")
 	public List<Coupon> getCoupons() {
 		return coupons;
 	}

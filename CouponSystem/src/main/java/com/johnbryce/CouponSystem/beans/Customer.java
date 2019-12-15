@@ -1,6 +1,5 @@
 package com.johnbryce.CouponSystem.beans;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -24,7 +23,7 @@ public class Customer {
 	private String last_name;
 	private String email;
 	private String password;
-	List<Coupon> coupons;
+	private List<Coupon> coupons;
 
 	public Customer() {
 	}
@@ -71,7 +70,7 @@ public class Customer {
 		return coupons;
 	}
 
-	public void setCoupons(ArrayList<Coupon> coupons) {
+	public void setCoupons(List<Coupon> coupons) {
 		this.coupons = coupons;
 	}
 

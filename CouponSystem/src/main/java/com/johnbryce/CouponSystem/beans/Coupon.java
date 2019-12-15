@@ -24,7 +24,7 @@ import com.johnbryce.CouponSystem.enums.CouponType;
 @Table
 public class Coupon {
 	private long id;
-	private Company company;
+	//private Company company;
 	private CouponType category;
 	private String title;
 	private String description;
@@ -33,14 +33,14 @@ public class Coupon {
 	private int amount;
 	private double price;
 	private String image;
-	
+
 	private List<Customer> customers;
 
 	public Coupon() {
 	}
 
-	public Coupon(CouponType category, String title, String description, Date start_date,
-			Date end_date, int amount, double price, String image) {
+	public Coupon(CouponType category, String title, String description, Date start_date, Date end_date, int amount,
+			double price, String image) {
 		super();
 		this.category = category;
 		this.title = title;
@@ -62,15 +62,16 @@ public class Coupon {
 		this.id = id;
 	}
 
-	@ManyToOne
-	@JoinColumn(name = "company_id")
-	public Company getCompany() {
-		return company;
-	}
-
-	public void setCompany(Company company) {
-		this.company = company;
-	}
+//	@ManyToOne
+//	@JoinColumn(name = "company_id")
+	
+//	public Company getCompany() {
+//		return company;
+//	}
+//
+//	public void setCompany(Company company) {
+//		this.company = company;
+//	}
 
 	@Column
 	@Enumerated(EnumType.STRING)
@@ -117,7 +118,7 @@ public class Coupon {
 	public void setEnd_date(Date end_date) {
 		this.end_date = end_date;
 	}
-	
+
 	@Column
 	public int getAmount() {
 		return amount;
@@ -155,11 +156,11 @@ public class Coupon {
 		this.customers = customers;
 	}
 
-	@Override
-	public String toString() {
-		return "Coupons [id=" + id + ", company=" + company + ", category=" + category + ", title=" + title
-				+ ", description=" + description + ", start_date=" + start_date + ", end_date=" + end_date + ", amount="
-				+ amount + ", price=" + price + ", image=" + image + "]";
-	}
+//	@Override
+//	public String toString() {
+//		return "Coupons [id=" + id + ", company=" + company + ", category=" + category + ", title=" + title
+//				+ ", description=" + description + ", start_date=" + start_date + ", end_date=" + end_date + ", amount="
+//				+ amount + ", price=" + price + ", image=" + image + "]";
+//	}
 
 }

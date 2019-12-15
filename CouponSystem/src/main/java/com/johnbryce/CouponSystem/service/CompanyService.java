@@ -20,23 +20,32 @@ public class CompanyService {
 
 	@Autowired
 	CompanyRepo companyRepo;
+	
+	//How to login(do i need to?)
+//	@Autowired
+//	Company company;
+	//OR
+//	long companyId;
+	
+	
 
-	public void addCoupon(Coupon coupon, long companyid) throws Exception {
-		if (!companyRepo.existsById(companyid)) {
-			throw new Exception("There is no company with such ID");
-		} else {
-			Company tempCompany = companyRepo.findById(companyid).get();
-			for (Coupon c : tempCompany.getCoupons()) {
-				if (c.getTitle().equals(coupon.getTitle())) {
-					throw new Exception("Coupon with such title already exists in this company");
-				}
-			}
-			coupon.setCompany(tempCompany);
-//			tempCompany.getCoupons().add(coupon);
-//			companyRepo.save(tempCompany);
-			couponRepo.save(coupon);
-		}
-	}
+//	public Company addCoupon(Coupon coupon, long companyid) throws Exception {
+//		if (!companyRepo.existsById(companyid)) {
+//			throw new Exception("There is no company with such ID");
+//		} else {
+//			Company tempCompany = companyRepo.findById(companyid).get();
+//			for (Coupon c : tempCompany.getCoupons()) {
+//				if (c.getTitle().equals(coupon.getTitle())) {
+//					throw new Exception("Coupon with such title already exists in this company");
+//				}
+//			}
+//			coupon.setCompany(tempCompany);
+////			tempCompany.getCoupons().add(coupon);
+////			companyRepo.save(tempCompany);
+//			couponRepo.save(coupon);
+//			return tempCompany;
+//		}	
+//	}
 
 	public Coupon updateCoupon(Coupon coupon) throws Exception {
 		if (couponRepo.existsById(coupon.getId())) {
@@ -69,13 +78,13 @@ public class CompanyService {
 		}
 	}
 
-	public List<Coupon> getCompanyCouponsById(long companyId) throws Exception{
-		 if(companyRepo.existsById(companyId)) {
-			 return couponRepo.findByCompany_Id(companyId);
-		 } else {
-			 throw new Exception("No company with such ID");
-		 }
-	}
+//	public List<Coupon> getCompanyCouponsById(long companyId) throws Exception{
+//		 if(companyRepo.existsById(companyId)) {
+//			 return couponRepo.findByCompany_Id(companyId);
+//		 } else {
+//			 throw new Exception("No company with such ID");
+//		 }
+//	}
 
 	public List<Coupon> getCompanyCouponsByCategory(long companyId, CouponType couponType)throws Exception{
 		if(companyRepo.existsById(companyId)) {

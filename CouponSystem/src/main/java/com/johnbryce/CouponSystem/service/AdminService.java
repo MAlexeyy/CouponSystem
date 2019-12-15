@@ -63,12 +63,11 @@ public class AdminService {
 		customers.add(new Customer("mookie", "Mookielast", "mookie@mail.com", "mookie123"));
 		customers.add(new Customer("Chookie", "Chookielast", "chookie@mail.com", "chookie123"));
 		customers.add(new Customer("Wookie", "Wookielast", "wookie@mail.com", "wookie123"));
-		customers.add(new Customer("Zoockie", "Zoockielast", "zoockie@mail.com", "zoockie123"));		
+		customers.add(new Customer("Zoockie", "Zoockielast", "zoockie@mail.com", "zoockie123"));
 		customerRepo.saveAll(customers);
-		
+
 		//System.out.println(customerRepo.findAll());
-		
-		System.out.println();
+		//System.out.println(customerRepo.fi);
 
 	}
 
@@ -163,9 +162,11 @@ public class AdminService {
 		return (List<Customer>) customerRepo.findAll();
 	}
 
-	public Optional<Customer> getOneCustomer(long customerId) throws Exception {
+	public Customer getOneCustomer(long customerId) throws Exception {
 		try {
-			return customerRepo.findById(customerId);
+			Customer customer;
+			customer = customerRepo.findById(customerId).get();
+			return customer;
 		} catch (Exception e) {
 			throw new Exception("No customer with such ID exist ");
 		}

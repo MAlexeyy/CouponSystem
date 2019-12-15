@@ -1,14 +1,10 @@
 package com.johnbryce.CouponSystem;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.context.ApplicationContext;
-
 public class Testing {
 
 	public static void Test(String[] args) {
 
-		ApplicationContext ctx = SpringApplication.run(CouponSystemApplication.class, args);
-		System.out.println("@@@@@ GO @@@@");
+		
 
 //		// -------------------Services--------------------------------------------------------------------------------------------------------------------------
 //		AdminService adminService = ctx.getBean(AdminService.class);

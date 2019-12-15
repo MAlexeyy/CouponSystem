@@ -7,10 +7,18 @@ import org.springframework.web.bind.annotation.RestController;
 import com.johnbryce.CouponSystem.service.CompanyService;
 
 @RestController
-@RequestMapping("company")
+@RequestMapping("/company")
 public class CompanyController {
 	
 	@Autowired
 	CompanyService companyService;
+	
+	@Autowired
+	CustomerController customerController;
+	
+	
+	
+	
+	
 	
 }

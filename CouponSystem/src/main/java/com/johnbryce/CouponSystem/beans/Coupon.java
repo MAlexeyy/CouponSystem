@@ -18,13 +18,16 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.johnbryce.CouponSystem.enums.CouponType;
 
 @Entity
 @Table
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Coupon {
 	private long id;
-	//private Company company;
+	private Company company;
 	private CouponType category;
 	private String title;
 	private String description;
@@ -62,16 +65,15 @@ public class Coupon {
 		this.id = id;
 	}
 
-//	@ManyToOne
-//	@JoinColumn(name = "company_id")
-	
-//	public Company getCompany() {
-//		return company;
-//	}
-//
-//	public void setCompany(Company company) {
-//		this.company = company;
-//	}
+
+	@ManyToOne
+	public Company getCompany() {
+		return company;
+	}
+
+	public void setCompany(Company company) {
+		this.company = company;
+	}
 
 	@Column
 	@Enumerated(EnumType.STRING)
@@ -156,11 +158,11 @@ public class Coupon {
 		this.customers = customers;
 	}
 
-//	@Override
-//	public String toString() {
-//		return "Coupons [id=" + id + ", company=" + company + ", category=" + category + ", title=" + title
-//				+ ", description=" + description + ", start_date=" + start_date + ", end_date=" + end_date + ", amount="
-//				+ amount + ", price=" + price + ", image=" + image + "]";
-//	}
+	@Override
+	public String toString() {
+		return "Coupons [id=" + id + ", category=" + category + ", title=" + title
+				+ ", description=" + description + ", start_date=" + start_date + ", end_date=" + end_date + ", amount="
+				+ amount + ", price=" + price + ", image=" + image + "]";
+	}
 
 }

@@ -48,10 +48,10 @@ public class CustomerService {
 		}
 	}
 
-//	public List<Coupon> getCustomerCoupons(long customerId) {
-//		Customer tmp = customerRepo.findById(customerId).get();
-//		return (List<Coupon>) tmp.getCoupons();
-//	}
+	public List<Coupon> getCustomerCoupons(long customerId) {
+		Customer tmp = customerRepo.findById(customerId).get();
+		return (List<Coupon>) tmp.getCoupons();
+	}
 
 	public List<Coupon> getCustomerCoupons(Category category) {
 		return null;

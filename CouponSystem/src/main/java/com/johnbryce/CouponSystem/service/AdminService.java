@@ -125,6 +125,9 @@ public class AdminService {
 		if (customerRepo.existsCustomerByEmail(customer.getEmail())) {
 			throw new Exception("Customer with such Email already exists ");
 		} else {
+//			Customer tempCustomer = null;
+//			tempCustomer = customerRepo.findById(customer.getId()).get();
+//			customerRepo.save(tempCustomer);
 			customerRepo.save(customer);
 		}
 		return customer;

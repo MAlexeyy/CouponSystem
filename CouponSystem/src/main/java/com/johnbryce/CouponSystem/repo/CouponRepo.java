@@ -11,7 +11,7 @@ import com.johnbryce.CouponSystem.enums.CouponType;
 @Repository
 public interface CouponRepo extends JpaRepository<Coupon, Long> {
 	
-	//public List<Coupon> findByCompany_Id(long companyId);
+	public List<Coupon> findByCompany_Id(long companyId);
 	
 	public List<Coupon> findByCategory(CouponType couponType);
 	

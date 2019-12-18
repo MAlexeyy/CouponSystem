@@ -2,6 +2,8 @@ package com.johnbryce.CouponSystem.beans;
 
 import java.util.List;
 
+import javax.persistence.Access;
+import javax.persistence.AccessType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,8 +12,12 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Entity
 @Table
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Company {
 	
 	private long id;
@@ -70,7 +76,8 @@ public class Company {
 		this.password = password;
 	}
 
-	@OneToMany//(mappedBy = "company")
+	@Access(AccessType.PROPERTY)
+	@OneToMany
 	public List<Coupon> getCoupons() {
 		return coupons;
 	}

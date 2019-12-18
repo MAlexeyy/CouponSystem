@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.johnbryce.CouponSystem.beans.Company;
@@ -30,8 +31,8 @@ public class AdminController {
 	@Autowired
 	CustomerService customerService;
 
-	// http://localhost:8080/admin/getCompany
-	@GetMapping("/getCompany")
+	// http://localhost:8080/admin/getAllCompanies
+	@GetMapping("/getAllCompanies")
 	public List<Company> getAllCompanies() {
 		return adminService.getAllCompanies();
 	}
@@ -53,14 +54,24 @@ public class AdminController {
 		return adminService.getOneCustomer(id);
 	}
 	
-//	@PostMapping("/addCoupon/{companyId}")
-//	public Company addCoupon(@RequestBody Coupon coupon, @PathVariable long companyId) throws Exception {
-//		return companyService.addCoupon(coupon, companyId);
-//	}
+	@PostMapping("/addCoupon/{companyId}")
+	public Company addCoupon(@RequestBody Coupon coupon, @PathVariable long companyId) throws Exception {
+		return companyService.addCoupon(coupon, companyId);
+	}
 	
 	@PostMapping("/addCompany")
 	public Company addCompany(@RequestBody Company company) throws Exception {
 		return adminService.addCompany(company);
+	}
+	
+	@PostMapping("/addCustomer")
+	public Customer addCustomer(@RequestBody Customer customer) throws Exception {
+		return adminService.addCustomer(customer);
+	}
+	
+	@PostMapping("/purchaseCoupon/{couponId}")
+	public Customer purchaseCustomer(@RequestBody Customer customer, @PathVariable long couponId) throws Exception {
+		return customerService.purchaseCoupon(customer, couponId);
 	}
 
 }

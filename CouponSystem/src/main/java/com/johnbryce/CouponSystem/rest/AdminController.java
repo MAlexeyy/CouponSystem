@@ -68,7 +68,7 @@ public class AdminController {
 	public Customer addCustomer(@RequestBody Customer customer) throws Exception {
 		return adminService.addCustomer(customer);
 	}
-	
+	//hi
 	@PostMapping("/purchaseCoupon/{couponId}")
 	public Customer purchaseCustomer(@RequestBody Customer customer, @PathVariable long couponId) throws Exception {
 		return customerService.purchaseCoupon(customer, couponId);

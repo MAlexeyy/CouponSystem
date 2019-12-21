@@ -1,27 +1,46 @@
 package com.johnbryce.CouponSystem.rest;
 
-import org.springframework.web.bind.annotation.RequestMapping;
+import java.util.Map;
+import java.util.UUID;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.johnbryce.CouponSystem.CouponSystem;
 import com.johnbryce.CouponSystem.enums.ClientType;
+import com.johnbryce.CouponSystem.service.Facade;
 
 @RestController
 public class LoginController {
 	
-	@RequestMapping
-	public String Login(@RequestParam String user, @RequestParam String password, @RequestParam String type) {
-		if(user.equals("Admin") && password.equals("1234") && type.equals("Admin")) {
-			return "This is admin";
-		}else if(user.equals("Moshe") && password.equals("1234") && type.equals("Customer")) {
-			return "This is Moshe customer";
-		}else if(user.equals("Kobi") && password.equals("1234") && type.equals("Customer")){
-			return "This is Kobi customer";
-		}else if(user.equals("Pepsi") && password.equals("1234") && type.equals("Company")) {
-			return "This is Pepsi company";
-		}else if(user.equals("Cola") && password.equals("1234") && type.equals("Company")){
-			return "This is Cola Company";
+	@Autowired
+	private Map<String, Session> tokensMap;
+	
+	@Autowired
+	private CouponSystem couponSystem;
+	
+	@PostMapping("/login")
+	public ResponseEntity<?> login(@RequestParam String email, @RequestParam String password, @RequestParam String type) {
+		if (!type.equals("ADMIN") && !type.equals("COMPANY") && !type.equals("CUSTOMER")) {
+			return new ResponseEntity<>("Wrong type", HttpStatus.UNAUTHORIZED);
 		}
-		return null;
+		Session clientSession = new Session();
+		Facade facade = null;
+		String token = UUID.randomUUID().toString();
+		long LastAccsessed = System.currentTimeMillis();
+		try {
+			facade = couponSystem.login(email, password, ClientType.valueOf(type));
+			clientSession.setFacade(facade);
+			clientSession.setLastAccessed(LastAccsessed);
+			tokensMap.put(token, clientSession);
+			return new ResponseEntity<>(token, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
+		}
 	}
+
 }

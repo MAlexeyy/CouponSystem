@@ -13,7 +13,7 @@ import com.johnbryce.CouponSystem.repo.CompanyRepo;
 import com.johnbryce.CouponSystem.repo.CouponRepo;
 
 @Service
-public class CompanyService {
+public class CompanyService implements Facade{
 
 	@Autowired
 	CouponRepo couponRepo;
@@ -21,13 +21,11 @@ public class CompanyService {
 	@Autowired
 	CompanyRepo companyRepo;
 	
-	//How to login(do i need to?)
-//	@Autowired
-//	Company company;
-	//OR
-//	long companyId;
+	long companyId;
 	
-	
+	public void setCompanyId(long companyId) {
+		this.companyId = companyId;
+	}
 
 	public Company addCoupon(Coupon coupon, long companyid) throws Exception {
 		if (!companyRepo.existsById(companyid)) {

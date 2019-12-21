@@ -12,7 +12,7 @@ import com.johnbryce.CouponSystem.repo.CouponRepo;
 import com.johnbryce.CouponSystem.repo.CustomerRepo;
 
 @Service
-public class CustomerService {
+public class CustomerService implements Facade {
 
 	@Autowired
 	CouponRepo couponRepo;
@@ -20,13 +20,12 @@ public class CustomerService {
 	@Autowired
 	CustomerRepo customerRepo;
 	
-	//Login
-//	@Autowired
-//	Customer customer
-	//OR
-//	long customerId;
-	
-	
+	long customerId;
+
+	public void setCustomerId(long customerId) {
+		this.customerId = customerId;
+	}
+
 	// TODO ask kobi, have to add customer id to this method?
 	public Customer purchaseCoupon(Customer customer, long id) throws Exception {
 		if(!customerRepo.existsById(customer.getId()) || !couponRepo.existsById(id)) {

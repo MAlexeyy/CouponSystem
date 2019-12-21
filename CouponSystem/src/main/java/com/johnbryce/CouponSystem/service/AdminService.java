@@ -9,7 +9,7 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.johnbryce.CouponSystem.Date.DateConfig;
+import com.johnbryce.CouponSystem.Config.DateConfig;
 import com.johnbryce.CouponSystem.beans.Company;
 import com.johnbryce.CouponSystem.beans.Coupon;
 import com.johnbryce.CouponSystem.beans.Customer;
@@ -19,7 +19,7 @@ import com.johnbryce.CouponSystem.repo.CouponRepo;
 import com.johnbryce.CouponSystem.repo.CustomerRepo;
 
 @Service
-public class AdminService {
+public class AdminService implements Facade {
 
 	@Autowired
 	CompanyRepo companyRepo;

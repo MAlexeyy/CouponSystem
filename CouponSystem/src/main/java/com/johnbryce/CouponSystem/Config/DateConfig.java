@@ -1,4 +1,4 @@
-package com.johnbryce.CouponSystem.Date;
+package com.johnbryce.CouponSystem.Config;
 
 import java.time.LocalDate;
 import java.util.Date;

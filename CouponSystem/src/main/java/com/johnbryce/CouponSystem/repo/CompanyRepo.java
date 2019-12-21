@@ -25,4 +25,6 @@ public interface CompanyRepo extends CrudRepository<Company, Long> {
 //
 //	public ArrayList<Coupon> getOneCompanyCoupons(int id);
 
+	public Company findCompanyByEmailAndPassword(String name, String password);
+
 }

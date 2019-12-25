@@ -1,8 +1,11 @@
 package com.johnbryce.CouponSystem.rest;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,11 +32,40 @@ public class AdminController {
 	
 	@Autowired
 	CustomerService customerService;
+	
+	@Autowired
+	private Map<String, Session> tokensMap;
+
+	private Session isActive(String token) {
+		return tokensMap.get(token);
+	}
 
 	// http://localhost:8080/admin/getAllCompanies
-	@GetMapping("/getAllCompanies")
-	public List<Company> getAllCompanies() {
-		return adminService.getAllCompanies();
+//	@GetMapping("/getAllCompanies/{token}")
+//	public List<Company> getAllCompanies(@PathVariable String token) {
+//		Session clientSession = isActive(token);
+//		if(clientSession != null) {
+//			return adminService.getAllCompanies();
+//		} else {
+//			return null;
+//		}	
+//	}
+	
+	@GetMapping("/getAllCompanies/{token}")
+	public ResponseEntity<?> getAllCompanies(@PathVariable String token) {
+		Session clientSession = isActive(token);
+		if (clientSession != null) {
+			clientSession.setLastAccessed(System.currentTimeMillis());
+			try {
+				return new ResponseEntity<> (adminService.getAllCompanies(), HttpStatus.OK);
+//				return new ResponseEntity<> (((AdminService) clientSession.getFacade()).getAllCompanies(), HttpStatus.OK);
+			} catch (Exception e) {
+				e.getMessage();
+				return new ResponseEntity<>("Failed to view all companies by admin", HttpStatus.BAD_REQUEST);
+			}
+		} else {
+			return new ResponseEntity<>("Unauthorized. Session Timeout", HttpStatus.UNAUTHORIZED); // GATEWAY_TIMEOUT
+		}
 	}
 
 	// http://localhost:8080/admin/getCoupons

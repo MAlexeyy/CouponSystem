@@ -11,9 +11,8 @@ public class CouponSystemApplication {
 
 	public static void main(String[] args) {
 
-		ApplicationContext ctx = SpringApplication.run(CouponSystemApplication.class, args);
-		System.out.println("@@@@@ GO @@@@");
-		
+		SpringApplication.run(CouponSystemApplication.class, args);
+		System.out.println("@@@@@@ GO @@@@@@");
 
 	}
 

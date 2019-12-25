@@ -16,15 +16,16 @@ import com.johnbryce.CouponSystem.service.Facade;
 
 @RestController
 public class LoginController {
-	
+
 	@Autowired
 	private Map<String, Session> tokensMap;
-	
+
 	@Autowired
 	private CouponSystem couponSystem;
-	
+
 	@PostMapping("/login")
-	public ResponseEntity<?> login(@RequestParam String email, @RequestParam String password, @RequestParam String type) {
+	public ResponseEntity<?> login(@RequestParam String email, @RequestParam String password,
+			@RequestParam String type) {
 		if (!type.equals("ADMIN") && !type.equals("COMPANY") && !type.equals("CUSTOMER")) {
 			return new ResponseEntity<>("Wrong type", HttpStatus.UNAUTHORIZED);
 		}

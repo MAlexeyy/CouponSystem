@@ -16,25 +16,25 @@ import com.johnbryce.CouponSystem.service.Facade;
 
 @Service
 public class CouponSystem {
- 
-    @Autowired
-    private ApplicationContext ctx;
-     
-    @Autowired
-    private AdminService adminService;
-     
-    @Autowired
-    private CustomerRepo customerRepo;
-    
-    @Autowired
-    private CompanyRepo companyRepo;
-     
+
+	@Autowired
+	private ApplicationContext ctx;
+
+	@Autowired
+	private AdminService adminService;
+
+	@Autowired
+	private CustomerRepo customerRepo;
+
+	@Autowired
+	private CompanyRepo companyRepo;
+
 //    @Autowired
 //    private CouponCleanerDailyTask task;
 //    
 //    @Autowired
 //    private SessionTimeoutHandler sessionTask;
-     
+
 //    @PostConstruct
 //    public void init() {
 //        task.start();
@@ -46,8 +46,9 @@ public class CouponSystem {
 //        task.stop();
 //        sessionTask.stop();
 //    }
-     
-    public Facade login(String email, String password, ClientType type) throws Exception { //throws CouponSystemException
+
+	public Facade login(String email, String password, ClientType type) throws Exception { // throws
+																							// CouponSystemException
 		switch (type) {
 		case ADMIN:
 			if (email.equals("admin") && password.equals("1234")) {
@@ -59,7 +60,7 @@ public class CouponSystem {
 			if (company != null) {
 				CompanyService companyService = ctx.getBean(CompanyService.class);
 				companyService.setCompanyId(company.getId());
-				System.out.println("Welcome " +company.getName()+ " company! You're logged in system");
+				System.out.println("Welcome " + company.getName() + " company! You're logged in system");
 				return companyService;
 			}
 		case CUSTOMER:
@@ -67,10 +68,10 @@ public class CouponSystem {
 			if (customer != null) {
 				CustomerService customerService = ctx.getBean(CustomerService.class);
 				customerService.setCustomerId(customer.getId());
-				System.out.println("Welcome customer " +customer.getFirst_name()+ "! You're logged in system");
+				System.out.println("Welcome customer " + customer.getFirst_name() + "! You're logged in system");
 				return customerService;
 			}
 		}
-		throw new Exception("Client not found. Check your data");//throw new CouponSystemException
+		throw new Exception("Client not found. Check your data");// throw new CouponSystemException
 	}
 }

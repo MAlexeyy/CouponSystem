@@ -47,8 +47,8 @@ public class CouponSystem {
 //        sessionTask.stop();
 //    }
 
-	public Facade login(String email, String password, ClientType type) throws Exception { // throws
-																							// CouponSystemException
+	public Facade login(String email, String password, ClientType type) throws Exception {
+																							
 		switch (type) {
 		case ADMIN:
 			if (email.equals("admin") && password.equals("1234")) {
@@ -72,6 +72,6 @@ public class CouponSystem {
 				return customerService;
 			}
 		}
-		throw new Exception("Client not found. Check your data");// throw new CouponSystemException
+		throw new Exception("Client not found. Check your data");
 	}
 }

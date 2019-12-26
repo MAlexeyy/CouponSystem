@@ -58,13 +58,12 @@ public class AdminController {
 			clientSession.setLastAccessed(System.currentTimeMillis());
 			try {
 				return new ResponseEntity<> (adminService.getAllCompanies(), HttpStatus.OK);
-//				return new ResponseEntity<> (((AdminService) clientSession.getFacade()).getAllCompanies(), HttpStatus.OK);
 			} catch (Exception e) {
 				e.getMessage();
-				return new ResponseEntity<>("Failed to view all companies by admin", HttpStatus.BAD_REQUEST);
+				return new ResponseEntity<>("Failed to display companies ", HttpStatus.BAD_REQUEST);
 			}
 		} else {
-			return new ResponseEntity<>("Unauthorized. Session Timeout", HttpStatus.UNAUTHORIZED); // GATEWAY_TIMEOUT
+			return new ResponseEntity<>("Unauthorized. Session Timeout", HttpStatus.UNAUTHORIZED);
 		}
 	}
 

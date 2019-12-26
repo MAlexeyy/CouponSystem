@@ -66,9 +66,6 @@ public class AdminService implements Facade {
 		customers.add(new Customer("Zoockie", "Zoockielast", "zoockie@mail.com", "zoockie123"));
 		customerRepo.saveAll(customers);
 
-		//System.out.println(customerRepo.findAll());
-		//System.out.println(customerRepo.fi);
-
 	}
 
 	public Company addCompany(Company company) throws Exception {

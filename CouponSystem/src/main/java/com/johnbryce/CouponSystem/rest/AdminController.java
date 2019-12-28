@@ -76,7 +76,13 @@ public class AdminController {
 	// http://localhost:8080/admin/getCustomers
 	@GetMapping("/getCustomers")
 	public List<Customer> getAllCustomers() {
-		return adminService.getAllCustomers();
+		try {
+			return adminService.getAllCustomers();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	@GetMapping("/getCustomer/{id}")

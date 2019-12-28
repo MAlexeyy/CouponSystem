@@ -8,6 +8,7 @@ import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import com.johnbryce.CouponSystem.Config.DateConfig;
 import com.johnbryce.CouponSystem.beans.Company;
@@ -68,107 +69,142 @@ public class AdminService implements Facade {
 
 	}
 
+	// Creating,adding new company.
 	public Company addCompany(Company company) throws Exception {
-		if (companyRepo.existsCompanyByNameOrEmail(company.getName(), company.getEmail())) {
-			throw new Exception("A company with the same Email or Password already exists");
-		} else {
-			companyRepo.save(company);
+		try {
+			if (companyRepo.existsCompanyByNameOrEmail(company.getName(), company.getEmail())) {
+				throw new Exception("A company with such name or Email already exists.");
+			} else {
+				companyRepo.save(company);
+			}
+		} catch (Exception e) {
+			throw new Exception("Failed to add a the company: " + e.getMessage());
 		}
 		return company;
 	}
 
+	// Updating company information.
 	public Company updateCompany(Company company) throws Exception {
-		if (companyRepo.existsById(company.getId())) {
-			Company tmp = companyRepo.findById(company.getId()).get();
-			tmp.setEmail(company.getEmail());
-			tmp.setPassword(company.getPassword());
-			companyRepo.save(tmp);
-		} else {
-			throw new Exception("No company with such ID exists. ");
+		try {
+			if (companyRepo.existsById(company.getId())) {
+				Company tmp = companyRepo.findById(company.getId()).get();
+				tmp.setEmail(company.getEmail());
+				tmp.setPassword(company.getPassword());
+				companyRepo.save(tmp);
+			} else {
+				throw new Exception("No company with such ID exists. ");
+			}
+		} catch (Exception e) {
+			throw new Exception("Failed to update company information: " + e.getMessage());
 		}
 		return company;
 	}
 
-	// TODO also make sure all the coupons are deleted.
+	// Delete company and all it's coupons.
 	public boolean deleteCompany(long companyId) throws Exception {
 		try {
-			companyRepo.deleteById(companyId);
-			return true;
+			if (companyRepo.existsById(companyId)) {
+				Company tmp = companyRepo.findById(companyId).get();
+				List<Coupon> coupons = tmp.getCoupons();
+				for (Coupon c : coupons) {
+					couponRepo.deleteById(c.getId());
+				}
+				companyRepo.deleteById(companyId);
+			} else {
+				throw new Exception("No company with such ID exists");
+			}
 		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
+			throw new Exception("Failed to delete company: " + e.getMessage());
 		}
+		return true;
 	}
 
-	public List<Company> getAllCompanies() {
+	// Get all companies.
+	public List<Company> getAllCompanies() throws Exception {
 		try {
 			return (List<Company>) companyRepo.findAll();
 		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
+			throw new Exception("Failed to get all companies: " + e.getMessage());
 		}
 	}
 
-	public Optional<Company> getOneCompany(long companyId) {
-//		try {
-		return companyRepo.findById(companyId);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			return null;
-//		}
+	// Get one company.
+	public Optional<Company> getOneCompany(long companyId) throws Exception {
+		try {
+			if (companyRepo.existsById(companyId)) {
+				return companyRepo.findById(companyId);
+			} else {
+				throw new Exception("No company with such id exists");
+			}
+		} catch (Exception e) {
+			throw new Exception("Failed to get company information: " + e.getMessage());
+		}
 	}
 
+	// Add one customer.
 	public Customer addCustomer(Customer customer) throws Exception {
-		if (customerRepo.existsCustomerByEmail(customer.getEmail())) {
-			throw new Exception("Customer with such Email already exists ");
-		} else {
-//			Customer tempCustomer = null;
-//			tempCustomer = customerRepo.findById(customer.getId()).get();
-//			customerRepo.save(tempCustomer);
-			customerRepo.save(customer);
+		try {
+			if (customerRepo.existsCustomerByEmail(customer.getEmail())) {
+				throw new Exception("Customer with such Email already exists ");
+			} else {
+				Customer tempCustomer = customerRepo.findById(customer.getId()).get();
+				customerRepo.save(tempCustomer);
+			}
+		} catch (Exception e) {
+			throw new Exception("Failed to add customer: " + e.getMessage());
 		}
 		return customer;
 	}
 
-	// TODO check for fix.
+	// Update customer information.
 	public Customer updateCustomer(Customer customer) throws Exception {
 		Customer temp = null;
-		if (customerRepo.existsById(customer.getId())) {
-			temp = customerRepo.findById(customer.getId()).get();
-			temp.setFirst_name(customer.getFirst_name());
-			temp.setLast_name(customer.getLast_name());
-			temp.setPassword(customer.getPassword());
-			temp.setEmail(customer.getEmail());
-			customerRepo.save(temp);
-			return temp;
-		} else {
-			throw new Exception("No customer with such ID exists. ");
-			// return temp; ask why wount work.
+		try {
+			if (customerRepo.existsById(customer.getId())) {
+				temp = customerRepo.findById(customer.getId()).get();
+				customerRepo.save(temp);
+			} else {
+				throw new Exception("No customer with such ID exists. ");
+			}
+		} catch (Exception e) {
+			throw new Exception("Failed to update customer information: " + e.getMessage());
 		}
+		return temp;
 	}
 
+	// Delete one customer.
 	public boolean deleteCustomer(long customerId) throws Exception {
 		try {
-			customerRepo.deleteById(customerId);
-			return true;
+			if (customerRepo.existsById(customerId)) {
+				customerRepo.deleteById(customerId);
+			} else {
+				throw new Exception("No customer with such ID");
+			}
 		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
+			throw new Exception("Failed to delete customer: " + e.getMessage());
 		}
-
+		return true;
 	}
 
-	public List<Customer> getAllCustomers() {
-		return (List<Customer>) customerRepo.findAll();
+	// Get all customers.
+	public List<Customer> getAllCustomers() throws Exception {
+		try {
+			return (List<Customer>) customerRepo.findAll();
+		} catch (Exception e) {
+			throw new Exception("Failed to get all customers: " + e.getMessage());
+		}
 	}
 
+	// Get one customer.
 	public Customer getOneCustomer(long customerId) throws Exception {
 		try {
-			Customer customer;
-			customer = customerRepo.findById(customerId).get();
-			return customer;
+			if (customerRepo.existsById(customerId)) {
+				return customerRepo.findById(customerId).get();
+			} else {
+				throw new Exception("No customer with such ID");
+			}
 		} catch (Exception e) {
-			throw new Exception("No customer with such ID exist ");
+			throw new Exception("Failed to get the customer: " + e.getMessage());
 		}
 	}
 

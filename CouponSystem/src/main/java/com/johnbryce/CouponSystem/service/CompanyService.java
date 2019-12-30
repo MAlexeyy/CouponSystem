@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.johnbryce.CouponSystem.Config.DateConfig;
 import com.johnbryce.CouponSystem.beans.Company;
 import com.johnbryce.CouponSystem.beans.Coupon;
 import com.johnbryce.CouponSystem.enums.CouponType;
@@ -13,41 +14,43 @@ import com.johnbryce.CouponSystem.repo.CompanyRepo;
 import com.johnbryce.CouponSystem.repo.CouponRepo;
 
 @Service
-public class CompanyService implements Facade{
+public class CompanyService implements Facade {
 
 	@Autowired
 	CouponRepo couponRepo;
 
 	@Autowired
 	CompanyRepo companyRepo;
-	
+
 	long companyId;
-	
+
 	public void setCompanyId(long companyId) {
 		this.companyId = companyId;
 	}
 
-	public Company addCoupon(Coupon coupon, long companyid) throws Exception {
-		if (!companyRepo.existsById(companyid)) {
+	// Add new coupon.
+	public Company addCoupon(Coupon coupon) throws Exception {
+		if (!companyRepo.existsById(this.companyId)) {
 			throw new Exception("There is no company with such ID");
 		} else {
-			Company tempCompany = companyRepo.findById(companyid).get();
+			Company tempCompany = companyRepo.findById(this.companyId).get();
 			for (Coupon c : tempCompany.getCoupons()) {
 				if (c.getTitle().equals(coupon.getTitle())) {
 					throw new Exception("Coupon with such title already exists in this company");
 				}
 			}
+			coupon.setStart_date(DateConfig.dateNow());
 			coupon.setCompany(tempCompany);
 			tempCompany.getCoupons().add(coupon);
 //			companyRepo.save(tempCompany);
 			couponRepo.save(coupon);
 			return tempCompany;
-		}	
+		}
 	}
 
+	// Update existing coupon.
 	public Coupon updateCoupon(Coupon coupon) throws Exception {
 		if (couponRepo.existsById(coupon.getId())) {
-
 			Coupon tempCoupon = couponRepo.findById(coupon.getId()).get();
 			tempCoupon.setAmount(coupon.getAmount());
 			tempCoupon.setCategory(coupon.getCategory());
@@ -67,6 +70,7 @@ public class CompanyService implements Facade{
 		}
 	}
 
+	// Delete coupon.
 	public Coupon deleteCoupon(Coupon coupon) throws Exception {
 		try {
 			couponRepo.delete(coupon);
@@ -76,36 +80,64 @@ public class CompanyService implements Facade{
 		}
 	}
 
-	public List<Coupon> getCompanyCouponsById(long companyId) throws Exception{
-		 if(companyRepo.existsById(companyId)) {
-			 return couponRepo.findByCompany_Id(companyId);
-		 } else {
-			 throw new Exception("No company with such ID");
-		 }
+	// Get all company coupons.
+	public List<Coupon> getCompanyCoupons() throws Exception {
+		if (companyRepo.existsById(this.companyId)) {
+			Company tmpCompany = companyRepo.findById(this.companyId).get();
+			return tmpCompany.getCoupons();
+		} else {
+			throw new Exception("No company with such ID");
+		}
 	}
 
-	public List<Coupon> getCompanyCouponsByCategory(long companyId, CouponType couponType)throws Exception{
-		if(companyRepo.existsById(companyId)) {
-			 return couponRepo.findByCategory(couponType);
-		 } else {
-			 throw new Exception("No company with such ID");
-		 }
+	// Get company coupons from specific category.
+	public List<Coupon> getCompanyCouponsByCategory(CouponType couponType) throws Exception {
+		List<Coupon> tmpCoupons = null;
+		if (companyRepo.existsById(this.companyId)) {
+			Company tmpCompany = companyRepo.findById(this.companyId).get();
+			for (Coupon c : tmpCompany.getCoupons()) {
+				if (c.getCategory().equals(couponType)) {
+					tmpCoupons.add(c);
+				}
+			}
+		} else {
+			throw new Exception("No company with such ID");
+		}
+		if (tmpCoupons.isEmpty()) {
+			throw new Exception("This company has no coupons with such category");
+		} else {
+			return tmpCoupons;
+		}
 	}
 
-	public List<Coupon> getCompanyCouponsByMaxPrice(long companyId,double price) throws Exception{
-		if(companyRepo.existsById(companyId)) {
-			 return couponRepo.findByPriceGreaterThan(price);
-		 } else {
-			 throw new Exception("No company with such ID");
-		 }
+	// Get company coupons with a max price.
+	public List<Coupon> getCompanyCouponsByMaxPrice(double price) throws Exception {
+		List<Coupon> tmpCoupons = null;
+		if (companyRepo.existsById(this.companyId)) {
+			Company tmpCompany = companyRepo.findById(this.companyId).get();
+			for (Coupon c : tmpCompany.getCoupons()) {
+				if (c.getPrice() <= price) {
+					tmpCoupons.add(c);
+				}
+			}
+		} else {
+			throw new Exception("No company with such ID");
+		}
+		if (tmpCoupons.isEmpty()) {
+			throw new Exception("This company has no coupons under searched price.");
+		} else {
+			return tmpCoupons;
+		}
 	}
 
-	public Optional<Company> getCompanyDetails(long companyId) {
-		return companyRepo.findById(companyId);
+	// Get company information.
+	public Optional<Company> getCompanyDetails() {
+		return companyRepo.findById(this.companyId);
 	}
-	
-	public List<Coupon> getAllCoupons(){
-		return couponRepo.findAll();
+
+	public List<Coupon> getAllCompanyCoupons() {
+		Company tmpCompany = companyRepo.findById(companyId).get();
+		return tmpCompany.getCoupons();
 	}
 
 }

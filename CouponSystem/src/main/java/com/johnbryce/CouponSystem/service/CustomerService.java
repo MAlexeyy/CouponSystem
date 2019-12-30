@@ -6,8 +6,10 @@ import java.util.Locale.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.johnbryce.CouponSystem.Config.DateConfig;
 import com.johnbryce.CouponSystem.beans.Coupon;
 import com.johnbryce.CouponSystem.beans.Customer;
+import com.johnbryce.CouponSystem.enums.CouponType;
 import com.johnbryce.CouponSystem.repo.CouponRepo;
 import com.johnbryce.CouponSystem.repo.CustomerRepo;
 
@@ -19,49 +21,89 @@ public class CustomerService implements Facade {
 
 	@Autowired
 	CustomerRepo customerRepo;
-	
+
 	long customerId;
 
 	public void setCustomerId(long customerId) {
 		this.customerId = customerId;
 	}
 
-	// TODO ask kobi, have to add customer id to this method?
-	public Customer purchaseCoupon(Customer customer, long id) throws Exception {
-		if(!customerRepo.existsById(customer.getId()) || !couponRepo.existsById(id)) {
-			throw new Exception("Customer or coupon does not exists.");
-		} else {
-			Customer newCustomer = customer;
-			List<Coupon> coupons = newCustomer.getCoupons();
-			coupons.add(couponRepo.findById(id).get());
-			newCustomer.setCoupons(coupons);
-			customerRepo.save(newCustomer);
-			
-			Coupon newCoupon = couponRepo.findById(id).get();
-			List<Customer> customers = newCoupon.getCustomers();
-			customers.add(customerRepo.findById(customer.getId()).get());
-			newCoupon.setCustomers(customers);
-			couponRepo.save(newCoupon);
-			
-			return customerRepo.findById(customer.getId()).get();
+	// Purchasing a single coupon.
+	public Customer purchaseCoupon(Coupon coupon) throws Exception {
+		try {
+			if (!couponRepo.existsById(coupon.getId())) {
+				throw new Exception("No coupon with such ID to purchase");
+			} else if (coupon.getEnd_date().before(DateConfig.dateNow())) {
+				throw new Exception("Coupon has expired.");
+			} else if (coupon.getAmount() < 1) {
+				throw new Exception("This coupon has ran out.");
+			} else if (customerRepo.findById(customerId).get().getCoupons().contains(coupon)) {
+				throw new Exception("Customer has aleady purchased this coupon");
+			}
+
+			Coupon tmpCoupon = coupon;
+			Customer tmpCustomer = customerRepo.findById(customerId).get();
+			tmpCoupon.setAmount(tmpCoupon.getAmount() - 1);
+			tmpCustomer.getCoupons().add(tmpCoupon);
+			customerRepo.save(tmpCustomer);
+			couponRepo.save(tmpCoupon);
+			return tmpCustomer;
+
+		} catch (Exception e) {
+			throw new Exception("Failed to purchase coupon: " + e.getMessage());
 		}
 	}
 
-	public List<Coupon> getCustomerCoupons(long customerId) {
-		Customer tmp = customerRepo.findById(customerId).get();
-		return (List<Coupon>) tmp.getCoupons();
+	// All customer coupons.
+	public List<Coupon> getCustomerCoupons() throws Exception {
+		try {
+			if (customerRepo.findById(customerId).get().getCoupons().isEmpty()) {
+				throw new Exception("Customr has no coupons.");
+			}
+			return customerRepo.findById(customerId).get().getCoupons();
+		} catch (Exception e) {
+			throw new Exception("Failed to get customers coupons: " + e.getMessage());
+		}
 	}
 
-	public List<Coupon> getCustomerCoupons(Category category) {
-		return null;
+	// Customer coupons from specific category.
+	public List<Coupon> getCustomerCoupons(CouponType category) throws Exception {
+		try {
+			if (customerRepo.findById(customerId).get().getCoupons().isEmpty()) {
+				throw new Exception("Customr has no coupons.");
+			}
+			List<Coupon> tmpCoupons = null;
+			for (Coupon c : customerRepo.findById(customerId).get().getCoupons()) {
+				if (c.getCategory().equals(category)) {
+					tmpCoupons.add(c);
+				}
+			}
+			return tmpCoupons;
+		} catch (Exception e) {
+			throw new Exception("Failed to get customer coupons: " + e.getMessage());
+		}
 	}
 
-	public List<Coupon> getCustomerCoupons(double maxPrice) {
-		return null;
+	// Customer coupons with a maximum price.
+	public List<Coupon> getCustomerCoupons(double maxPrice) throws Exception {
+		try {
+			if (customerRepo.findById(customerId).get().getCoupons().isEmpty()) {
+				throw new Exception("Customr has no coupons.");
+			}
+			List<Coupon> tmpCoupons = null;
+			for (Coupon c : customerRepo.findById(customerId).get().getCoupons()) {
+				if (c.getPrice() <= maxPrice) {
+					tmpCoupons.add(c);
+				}
+			}
+			return tmpCoupons;
+		} catch (Exception e) {
+			throw new Exception("Failed to get customer coupons: " + e.getMessage());
+		}
 	}
 
-	// TODO ask kobi, if this is fine.
-	public String getCustomerDetails(long customerId) {
+	// Customer information.
+	public String getCustomerDetails() {
 		return customerRepo.findById(customerId).get().toString();
 	}
 

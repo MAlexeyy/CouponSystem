@@ -8,7 +8,6 @@ import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import com.johnbryce.CouponSystem.Config.DateConfig;
 import com.johnbryce.CouponSystem.beans.Company;
@@ -147,8 +146,7 @@ public class AdminService implements Facade {
 			if (customerRepo.existsCustomerByEmail(customer.getEmail())) {
 				throw new Exception("Customer with such Email already exists ");
 			} else {
-				Customer tempCustomer = customerRepo.findById(customer.getId()).get();
-				customerRepo.save(tempCustomer);
+				customerRepo.save(customer);
 			}
 		} catch (Exception e) {
 			throw new Exception("Failed to add customer: " + e.getMessage());

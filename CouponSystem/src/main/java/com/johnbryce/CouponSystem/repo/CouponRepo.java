@@ -17,6 +17,8 @@ public interface CouponRepo extends JpaRepository<Coupon, Long> {
 	
 	public List<Coupon> findByPriceGreaterThan(double price);
 	
+	public boolean existsCouponByIdAndCompany_Id(long couponId, long companyId);
+	
 	
 
 //	public void addCoupon(Coupon coupon);

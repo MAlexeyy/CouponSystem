@@ -27,6 +27,8 @@ public class CompanyService implements Facade {
 	public void setCompanyId(long companyId) {
 		this.companyId = companyId;
 	}
+	
+	
 
 	// Add new coupon.
 	public Company addCoupon(Coupon coupon) throws Exception {
@@ -49,32 +51,40 @@ public class CompanyService implements Facade {
 	}
 
 	// Update existing coupon.
-	public Coupon updateCoupon(Coupon coupon) throws Exception {
-		if (couponRepo.existsById(coupon.getId())) {
-			Coupon tempCoupon = couponRepo.findById(coupon.getId()).get();
-			tempCoupon.setAmount(coupon.getAmount());
-			tempCoupon.setCategory(coupon.getCategory());
-			tempCoupon.setDescription(coupon.getDescription());
-			tempCoupon.setTitle(coupon.getTitle());
-			tempCoupon.setStart_date(coupon.getStart_date());
-			tempCoupon.setEnd_date(coupon.getEnd_date());
-			tempCoupon.setPrice(coupon.getPrice());
-			tempCoupon.setImage(coupon.getImage());
-			couponRepo.save(tempCoupon);
-			return tempCoupon;
-
-		} else {
-
-			throw new Exception("No coupon with such id to update");
-
+	public String updateCoupon(Coupon coupon) throws Exception {
+		Company tmpCompany = companyRepo.findById(companyId).get();		
+		try {
+			if (couponRepo.existsCouponByIdAndCompany_Id(coupon.getId(),companyId)) {
+				Coupon tempCoupon = couponRepo.findById(coupon.getId()).get();
+				tempCoupon.setAmount(coupon.getAmount());
+				tempCoupon.setCategory(coupon.getCategory());
+				tempCoupon.setDescription(coupon.getDescription());
+				tempCoupon.setTitle(coupon.getTitle());
+				tempCoupon.setStart_date(coupon.getStart_date());
+				tempCoupon.setEnd_date(coupon.getEnd_date());
+				tempCoupon.setPrice(coupon.getPrice());
+				tempCoupon.setImage(coupon.getImage());
+				couponRepo.save(tempCoupon);
+				return "Coupon was updated.";
+			} else {
+				throw new Exception("No coupon with such id to update");
+			}
+		} catch (Exception e) {		
+			throw new Exception("Failed to update coupon");
 		}
 	}
 
 	// Delete coupon.
-	public Coupon deleteCoupon(Coupon coupon) throws Exception {
+	public String deleteCoupon(long couponId) throws Exception {
+		Company tmpCompany = companyRepo.findById(companyId).get();	
+		Coupon tmpCoupon = couponRepo.findById(couponId).get();
 		try {
-			couponRepo.delete(coupon);
-			return coupon;
+			if(tmpCompany.getCoupons().contains(tmpCoupon)) {
+				couponRepo.delete(tmpCoupon);
+				return "Great success, coupon deleted.";
+			} else {
+				throw new Exception("Your company has no cuch coupon.");
+			}
 		} catch (Exception e) {
 			throw new Exception("Failed to delete coupon");
 		}

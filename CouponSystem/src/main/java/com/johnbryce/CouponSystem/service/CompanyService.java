@@ -13,6 +13,8 @@ import com.johnbryce.CouponSystem.enums.CouponType;
 import com.johnbryce.CouponSystem.repo.CompanyRepo;
 import com.johnbryce.CouponSystem.repo.CouponRepo;
 
+import ch.qos.logback.core.subst.Token.Type;
+
 @Service
 public class CompanyService implements Facade {
 
@@ -101,12 +103,13 @@ public class CompanyService implements Facade {
 	}
 
 	// Get company coupons from specific category.
-	public List<Coupon> getCompanyCouponsByCategory(CouponType couponType) throws Exception {
+	public List<Coupon> getCompanyCouponsByCategory(String type) throws Exception {
 		List<Coupon> tmpCoupons = null;
+		CouponType couponType = CouponType.valueOf(type);
 		if (companyRepo.existsById(this.companyId)) {
 			Company tmpCompany = companyRepo.findById(this.companyId).get();
 			for (Coupon c : tmpCompany.getCoupons()) {
-				if (c.getCategory().equals(couponType)) {
+				if (c.getCategory() == couponType) {
 					tmpCoupons.add(c);
 				}
 			}

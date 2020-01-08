@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.johnbryce.CouponSystem.beans.Company;
 import com.johnbryce.CouponSystem.beans.Coupon;
+import com.johnbryce.CouponSystem.enums.CouponType;
 import com.johnbryce.CouponSystem.service.CompanyService;
 
 @RestController
@@ -91,7 +92,55 @@ public class CompanyController {
 				return new ResponseEntity<>(companyService.getAllCompanyCoupons(), HttpStatus.OK);
 			} catch (Exception e) {
 				e.getMessage();
-				return new ResponseEntity<>("Failed to display companies ", HttpStatus.BAD_REQUEST);
+				return new ResponseEntity<>("Failed to display coupons ", HttpStatus.BAD_REQUEST);
+			}
+		} else {
+			return new ResponseEntity<>("Unauthorized. Session Timeout", HttpStatus.UNAUTHORIZED);
+		}
+	}
+	
+	@GetMapping("/getCouponsByCategory/{type}/{token}")
+	public ResponseEntity<?> getCouponsByCategory(@PathVariable String type,@PathVariable String token) {
+		Session clientSession = isActive(token);
+		if (clientSession != null) {
+			clientSession.setLastAccessed(System.currentTimeMillis());
+			try {
+				return new ResponseEntity<>(companyService.getCompanyCouponsByCategory(type), HttpStatus.OK);
+			} catch (Exception e) {
+				e.getMessage();
+				return new ResponseEntity<>("Failed to display coupons ", HttpStatus.BAD_REQUEST);
+			}
+		} else {
+			return new ResponseEntity<>("Unauthorized. Session Timeout", HttpStatus.UNAUTHORIZED);
+		}
+	}
+	
+	@GetMapping("/getCouponsByMaxPrice/{price}/{token}")
+	public ResponseEntity<?> getCouponsByMaxPrice(@PathVariable double price,@PathVariable String token) {
+		Session clientSession = isActive(token);
+		if (clientSession != null) {
+			clientSession.setLastAccessed(System.currentTimeMillis());
+			try {
+				return new ResponseEntity<>(companyService.getCompanyCouponsByMaxPrice(price), HttpStatus.OK);
+			} catch (Exception e) {
+				e.getMessage();
+				return new ResponseEntity<>("Failed to display coupons ", HttpStatus.BAD_REQUEST);
+			}
+		} else {
+			return new ResponseEntity<>("Unauthorized. Session Timeout", HttpStatus.UNAUTHORIZED);
+		}
+	}
+	
+	@GetMapping("/getCompanyInformation/{token}")
+	public ResponseEntity<?> getCompanyInformation(@PathVariable String token) {
+		Session clientSession = isActive(token);
+		if (clientSession != null) {
+			clientSession.setLastAccessed(System.currentTimeMillis());
+			try {
+				return new ResponseEntity<>(companyService.getCompanyDetails(), HttpStatus.OK);
+			} catch (Exception e) {
+				e.getMessage();
+				return new ResponseEntity<>("Failed to company information ", HttpStatus.BAD_REQUEST);
 			}
 		} else {
 			return new ResponseEntity<>("Unauthorized. Session Timeout", HttpStatus.UNAUTHORIZED);

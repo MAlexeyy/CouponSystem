@@ -28,7 +28,8 @@ public class CustomerService implements Facade {
 	}
 
 	// Purchasing a single coupon.
-	public Customer purchaseCoupon(Coupon coupon) throws Exception {
+	public Customer purchaseCoupon(long couponId) throws Exception {
+		Coupon coupon = couponRepo.findById(couponId).get();
 		try {
 			if (!couponRepo.existsById(coupon.getId())) {
 				throw new Exception("No coupon with such ID to purchase");
@@ -40,16 +41,15 @@ public class CustomerService implements Facade {
 				throw new Exception("Customer has aleady purchased this coupon");
 			}
 
-			Coupon tmpCoupon = coupon;
-			Customer tmpCustomer = customerRepo.findById(customerId).get();
-			tmpCoupon.setAmount(tmpCoupon.getAmount() - 1);
-			tmpCustomer.getCoupons().add(tmpCoupon);
-			customerRepo.save(tmpCustomer);
-			couponRepo.save(tmpCoupon);
-			return tmpCustomer;
+			couponRepo.save(coupon);
+			Customer customer = customerRepo.findById(customerId).get();
+			customer.getCoupons().add(coupon);
+			customerRepo.save(customer);
+			coupon.setAmount(coupon.getAmount() - 1);
+			return customer;
 
-		} catch (Exception e) {
-			throw new Exception("Failed to purchase coupon: " + e.getMessage());
+		} catch (Exception m) {
+			throw new Exception("Failed to purchase coupon: " + m.getMessage());
 		}
 	}
 
@@ -102,8 +102,8 @@ public class CustomerService implements Facade {
 	}
 
 	// Customer information.
-	public String getCustomerDetails() {
-		return customerRepo.findById(customerId).get().toString();
+	public Customer getCustomerDetails() {
+		return customerRepo.findById(customerId).get();
 	}
 
 }

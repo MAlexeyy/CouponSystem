@@ -1,5 +1,6 @@
 package com.johnbryce.CouponSystem.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -104,7 +105,7 @@ public class CompanyService implements Facade {
 
 	// Get company coupons from specific category.
 	public List<Coupon> getCompanyCouponsByCategory(String type) throws Exception {
-		List<Coupon> tmpCoupons = null;
+		List<Coupon> tmpCoupons = new ArrayList<Coupon>();
 		CouponType couponType = CouponType.valueOf(type);
 		if (companyRepo.existsById(this.companyId)) {
 			Company tmpCompany = companyRepo.findById(this.companyId).get();
@@ -125,7 +126,7 @@ public class CompanyService implements Facade {
 
 	// Get company coupons with a max price.
 	public List<Coupon> getCompanyCouponsByMaxPrice(double price) throws Exception {
-		List<Coupon> tmpCoupons = null;
+		List<Coupon> tmpCoupons = new ArrayList<Coupon>();
 		if (companyRepo.existsById(this.companyId)) {
 			Company tmpCompany = companyRepo.findById(this.companyId).get();
 			for (Coupon c : tmpCompany.getCoupons()) {

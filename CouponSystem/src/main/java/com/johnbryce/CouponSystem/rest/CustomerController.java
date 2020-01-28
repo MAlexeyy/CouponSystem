@@ -46,6 +46,55 @@ public class CustomerController {
 		}
 	}
 	
+	@GetMapping("/getAllCustomerCoupons/{token}")
+	public ResponseEntity<?> getAllCustomerCoupons(@PathVariable String token) {
+		Session clientSession = isActive(token);
+		if (clientSession != null) {
+			clientSession.setLastAccessed(System.currentTimeMillis());
+			try {
+				return new ResponseEntity<>(customerService.getCustomerCoupons(), HttpStatus.OK);
+			} catch (Exception e) {
+				e.getMessage();
+				return new ResponseEntity<>("Failed to display coupons ", HttpStatus.BAD_REQUEST);
+			}
+		} else {
+			return new ResponseEntity<>("Unauthorized. Session Timeout", HttpStatus.UNAUTHORIZED);
+		}
+	}
+	
+	@GetMapping("/getCustomerCouponsByCategory/{type}/{token}")
+	public ResponseEntity<?> getCouponsByCategory(@PathVariable String type,@PathVariable String token) {
+		Session clientSession = isActive(token);
+		if (clientSession != null) {
+			clientSession.setLastAccessed(System.currentTimeMillis());
+			try {
+				return new ResponseEntity<>(customerService.getCustomerCoupons(type), HttpStatus.OK);
+			} catch (Exception e) {
+				e.getMessage();
+				return new ResponseEntity<>("Failed to display coupons ", HttpStatus.BAD_REQUEST);
+			}
+		} else {
+			return new ResponseEntity<>("Unauthorized. Session Timeout", HttpStatus.UNAUTHORIZED);
+		}
+	}
+	
+	@GetMapping("/getCustomerCouponsByMaxPrice/{price}/{token}")
+	public ResponseEntity<?> getCouponsByMaxPrice(@PathVariable double price,@PathVariable String token) {
+		Session clientSession = isActive(token);
+		if (clientSession != null) {
+			clientSession.setLastAccessed(System.currentTimeMillis());
+			try {
+				return new ResponseEntity<>(customerService.getCustomerCoupons(price), HttpStatus.OK);
+			} catch (Exception e) {
+				e.getMessage();
+				return new ResponseEntity<>("Failed to display coupons ", HttpStatus.BAD_REQUEST);
+			}
+		} else {
+			return new ResponseEntity<>("Unauthorized. Session Timeout", HttpStatus.UNAUTHORIZED);
+		}
+	}
+	
+	
 	@GetMapping("/getCustomerInformation/{token}")
 	public ResponseEntity<?> getCustomerInformation(@PathVariable String token) {
 		Session clientSession = isActive(token);
@@ -55,7 +104,7 @@ public class CustomerController {
 				return new ResponseEntity<>(customerService.getCustomerDetails(), HttpStatus.OK);
 			} catch (Exception e) {
 				e.getMessage();
-				return new ResponseEntity<>("Failed to company information ", HttpStatus.BAD_REQUEST);
+				return new ResponseEntity<>("Failed to get customer information ", HttpStatus.BAD_REQUEST);
 			}
 		} else {
 			return new ResponseEntity<>("Unauthorized. Session Timeout", HttpStatus.UNAUTHORIZED);

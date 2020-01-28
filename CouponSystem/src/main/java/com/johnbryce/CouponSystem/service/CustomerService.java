@@ -1,5 +1,6 @@
 package com.johnbryce.CouponSystem.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,8 +34,9 @@ public class CustomerService implements Facade {
 		try {
 			if (!couponRepo.existsById(coupon.getId())) {
 				throw new Exception("No coupon with such ID to purchase");
-			} else if (coupon.getEnd_date().before(DateConfig.dateNow())) {
-				throw new Exception("Coupon has expired.");
+//	TODO: ADD end date to coupons to check this functionality.			
+//			} else if (coupon.getEnd_date().before(DateConfig.dateNow())) {
+//				throw new Exception("Coupon has expired.");
 			} else if (coupon.getAmount() < 1) {
 				throw new Exception("This coupon has ran out.");
 			} else if (customerRepo.findById(customerId).get().getCoupons().contains(coupon)) {
@@ -56,7 +58,7 @@ public class CustomerService implements Facade {
 	// All customer coupons.
 	public List<Coupon> getCustomerCoupons() throws Exception {
 		try {
-			if (customerRepo.findById(customerId).get().getCoupons().isEmpty()) {
+			if (customerRepo.findById(customerId).get().getCoupons().isEmpty() || customerRepo.findById(customerId).get().getCoupons() == null) {
 				throw new Exception("Customr has no coupons.");
 			}
 			return customerRepo.findById(customerId).get().getCoupons();
@@ -66,14 +68,16 @@ public class CustomerService implements Facade {
 	}
 
 	// Customer coupons from specific category.
-	public List<Coupon> getCustomerCoupons(CouponType category) throws Exception {
+	public List<Coupon> getCustomerCoupons(String type) throws Exception {
+		CouponType couponType = CouponType.valueOf(type);
+		List<Coupon> tmpCoupons = new ArrayList<Coupon>();
+		List<Coupon> coupons = customerRepo.findById(customerId).get().getCoupons();
 		try {
-			if (customerRepo.findById(customerId).get().getCoupons().isEmpty()) {
-				throw new Exception("Customr has no coupons.");
-			}
-			List<Coupon> tmpCoupons = null;
-			for (Coupon c : customerRepo.findById(customerId).get().getCoupons()) {
-				if (c.getCategory().equals(category)) {
+//			if (customerRepo.findById(customerId).get().getCoupons().isEmpty()) {
+//				throw new Exception("Customr has no coupons.");
+//			}		
+			for (Coupon c : coupons) {
+				if (c.getCategory().equals(couponType)) {
 					tmpCoupons.add(c);
 				}
 			}
@@ -85,11 +89,11 @@ public class CustomerService implements Facade {
 
 	// Customer coupons with a maximum price.
 	public List<Coupon> getCustomerCoupons(double maxPrice) throws Exception {
+		List<Coupon> tmpCoupons = new ArrayList<Coupon>();
 		try {
 			if (customerRepo.findById(customerId).get().getCoupons().isEmpty()) {
 				throw new Exception("Customr has no coupons.");
-			}
-			List<Coupon> tmpCoupons = null;
+			}						
 			for (Coupon c : customerRepo.findById(customerId).get().getCoupons()) {
 				if (c.getPrice() <= maxPrice) {
 					tmpCoupons.add(c);

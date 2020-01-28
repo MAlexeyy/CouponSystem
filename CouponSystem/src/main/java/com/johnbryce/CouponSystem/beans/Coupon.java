@@ -40,7 +40,8 @@ public class Coupon {
 	private int amount;
 	private double price;
 	private String image;
-
+	
+	@JsonIgnore
 	private List<Customer> customers;
 
 	public Coupon() {
